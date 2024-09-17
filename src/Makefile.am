@@ -3,63 +3,63 @@ lib_LTLIBRARIES =
 LIBDSPRPC_CFLAGS = -fno-short-enums -U_DEBUG -DARM_ARCH_7A -DLE_ENABLE -DNO_HAL -DENABLE_UPSTREAM_DRIVER_INTERFACE -DUSE_SYSLOG -I$(top_srcdir)/inc
 
 LIBDSPRPC_SOURCES = \
-		fastrpc_apps_user.c \
-		fastrpc_perf.c \
-		fastrpc_pm.c \
-		fastrpc_config.c \
-		fastrpc_async.c \
-		fastrpc_mem.c \
-		fastrpc_notif.c \
-		fastrpc_latency.c \
-		fastrpc_ioctl.c \
-		fastrpc_log.c \
-		fastrpc_procbuf.c \
-		fastrpc_cap.c \
+		service/fastrpc_apps_user.c \
+		profile/fastrpc_perf.c \
+		service/fastrpc_pm.c \
+		service/fastrpc_config.c \
+		service/fastrpc_async.c \
+		memory/fastrpc_mem.c \
+		service/fastrpc_notif.c \
+		profile/fastrpc_latency.c \
+		service/fastrpc_ioctl.c \
+		debug/fastrpc_log.c \
+		service/fastrpc_procbuf.c \
+		service/fastrpc_cap.c \
 		log_config.c \
-		dspsignal.c \
+		domain/dspsignal.c \
 		dspqueue/dspqueue_cpu.c \
 		dspqueue/dspqueue_rpc_stub.c \
-		listener_android.c \
-		apps_std_imp.c \
-		apps_mem_imp.c \
-		apps_mem_skel.c \
-		rpcmem_linux.c \
-		adspmsgd.c \
-		adspmsgd_printf.c \
-		std.c \
-		std_path.c \
-		std_mem.c \
-		std_dtoa.c \
-		std_strlprintf.c \
-		BufBound.c \
-		std_SwapBytes.c \
-		smath.c \
-		atomic.c \
-		cae.c \
-		platform_libs.c \
-		pl_list.c \
-		gpls.c \
-		remotectl_stub.c \
-		remotectl1_stub.c \
-		adspmsgd_apps_skel.c \
-		adspmsgd_adsp_stub.c \
-		adspmsgd_adsp1_stub.c \
-		apps_remotectl_skel.c \
-		adsp_current_process_stub.c \
-		adsp_current_process1_stub.c \
-		adsp_listener_stub.c \
-		adsp_listener1_stub.c \
-		apps_std_skel.c \
-		adsp_perf_stub.c \
-		adsp_perf1_stub.c \
-		mod_table.c
+		communication/listener_android.c \
+		fileOperation/apps_std_imp.c \
+		memory/apps_mem_imp.c \
+		marshaling/apps_mem_skel.c \
+		memory/rpcmem_linux.c \
+		debug/adspmsgd.c \
+		debug/adspmsgd_printf.c \
+		common/std.c \
+		common/std_path.c \
+		common/std_mem.c \
+		common/std_dtoa.c \
+		common/std_strlprintf.c \
+		common/BufBound.c \
+		common/std_SwapBytes.c \
+		common/smath.c \
+		common/atomic.c \
+		common/cae.c \
+		common/platform_libs.c \
+		common/pl_list.c \
+		common/gpls.c \
+		marshaling/remotectl_stub.c \
+		marshaling/remotectl1_stub.c \
+		marshaling/adspmsgd_apps_skel.c \
+		marshaling/adspmsgd_adsp_stub.c \
+		marshaling/adspmsgd_adsp1_stub.c \
+		marshaling/apps_remotectl_skel.c \
+		marshaling/adsp_current_process_stub.c \
+		marshaling/adsp_current_process1_stub.c \
+		marshaling/adsp_listener_stub.c \
+		marshaling/adsp_listener1_stub.c \
+		marshaling/apps_std_skel.c \
+		marshaling/adsp_perf_stub.c \
+		marshaling/adsp_perf1_stub.c \
+		common/mod_table.c
 
 LIBDEFAULT_LISTENER_SOURCES = \
-				adsp_default_listener.c \
-				adsp_default_listener_stub.c \
-				adsp_default_listener1_stub.c \
-				std.c \
-				std_mem.c
+				communication/adsp_default_listener.c \
+				marshaling/adsp_default_listener_stub.c \
+				marshaling/adsp_default_listener1_stub.c \
+				common/std.c \
+				common/std_mem.c
 
 if ANDROID_CC
 USE_LOG = -llog
@@ -108,21 +108,21 @@ libsdsp_default_listener_la_CFLAGS = $(SDSP_CFLAGS) -DUSE_SYSLOG
 bin_PROGRAMS = adsprpcd cdsprpcd sdsprpcd
 
 adsprpcddir = $(libdir)
-adsprpcd_SOURCES = adsprpcd.c
+adsprpcd_SOURCES = domain/adsprpcd.c
 adsprpcd_DEPENDENCIES = libadsp_default_listener.la
 adsprpcd_CFLAGS = -I$(top_srcdir)/inc -DDEFAULT_DOMAIN_ID=0 -DUSE_SYSLOG
 adsprpcd_LDADD = -ldl $(USE_LOG)
 
 
 cdsprpcddir = $(libdir)
-cdsprpcd_SOURCES = cdsprpcd.c
+cdsprpcd_SOURCES = domain/cdsprpcd.c
 cdsprpcd_DEPENDENCIES = libcdsp_default_listener.la
 cdsprpcd_CFLAGS = -I$(top_srcdir)/inc -DDEFAULT_DOMAIN_ID=3 -DUSE_SYSLOG
 cdsprpcd_LDADD =  -ldl $(USE_LOG)
 
 
 sdsprpcddir = $(libdir)
-sdsprpcd_SOURCES = cdsprpcd.c
+sdsprpcd_SOURCES = domain/cdsprpcd.c
 sdsprpcd_DEPENDENCIES = libsdsp_default_listener.la
 sdsprpcd_CFLAGS = -I$(top_srcdir)/inc -DDEFAULT_DOMAIN_ID=2 -DUSE_SYSLOG
 sdsprpcd_LDADD =  -ldl $(USE_LOG)
