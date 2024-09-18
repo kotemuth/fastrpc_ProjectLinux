@@ -5,7 +5,7 @@ lib_LTLIBRARIES =
 LIBDSPRPC_CFLAGS = -fno-short-enums -U_DEBUG -DARM_ARCH_7A -DLE_ENABLE -DNO_HAL -DENABLE_UPSTREAM_DRIVER_INTERFACE -DUSE_SYSLOG -I$(top_srcdir)/inc
 
 LIBDSPRPC_SOURCES = \
-		service/fastrpc_apps_user.c \
+		fastrpc_apps_core.c \
 		profile/fastrpc_perf.c \
 		service/fastrpc_pm.c \
 		service/fastrpc_config.c \
@@ -18,13 +18,13 @@ LIBDSPRPC_SOURCES = \
 		service/fastrpc_procbuf.c \
 		service/fastrpc_cap.c \
 		debug/log_config.c \
-		domain/dspsignal.c \
+		daemon/dspsignal.c \
 		dspqueue/dspqueue_cpu.c \
 		dspqueue/dspqueue_rpc_stub.c \
-		communication/listener_android.c \
-		fileOperation/apps_std_imp.c \
+		listener/listener_android.c \
+		listener/apps_std_imp.c \
 		memory/apps_mem_imp.c \
-		marshaling/apps_mem_skel.c \
+		dspInterface/apps_mem_skel.c \
 		memory/rpcmem_linux.c \
 		debug/adspmsgd.c \
 		debug/adspmsgd_printf.c \
@@ -41,25 +41,25 @@ LIBDSPRPC_SOURCES = \
 		common/platform_libs.c \
 		common/pl_list.c \
 		common/gpls.c \
-		marshaling/remotectl_stub.c \
-		marshaling/remotectl1_stub.c \
-		marshaling/adspmsgd_apps_skel.c \
-		marshaling/adspmsgd_adsp_stub.c \
-		marshaling/adspmsgd_adsp1_stub.c \
-		marshaling/apps_remotectl_skel.c \
-		marshaling/adsp_current_process_stub.c \
-		marshaling/adsp_current_process1_stub.c \
-		marshaling/adsp_listener_stub.c \
-		marshaling/adsp_listener1_stub.c \
-		marshaling/apps_std_skel.c \
-		marshaling/adsp_perf_stub.c \
-		marshaling/adsp_perf1_stub.c \
+		dspInterface/remotectl_stub.c \
+		dspInterface/remotectl1_stub.c \
+		dspInterface/adspmsgd_apps_skel.c \
+		dspInterface/adspmsgd_adsp_stub.c \
+		dspInterface/adspmsgd_adsp1_stub.c \
+		dspInterface/apps_remotectl_skel.c \
+		dspInterface/adsp_current_process_stub.c \
+		dspInterface/adsp_current_process1_stub.c \
+		dspInterface/adsp_listener_stub.c \
+		dspInterface/adsp_listener1_stub.c \
+		dspInterface/apps_std_skel.c \
+		dspInterface/adsp_perf_stub.c \
+		dspInterface/adsp_perf1_stub.c \
 		common/mod_table.c
 
 LIBDEFAULT_LISTENER_SOURCES = \
-				communication/adsp_default_listener.c \
-				marshaling/adsp_default_listener_stub.c \
-				marshaling/adsp_default_listener1_stub.c \
+				listener/adsp_default_listener.c \
+				dspInterface/adsp_default_listener_stub.c \
+				dspInterface/adsp_default_listener1_stub.c \
 				common/std.c \
 				common/std_mem.c
 
@@ -110,21 +110,21 @@ libsdsp_default_listener_la_CFLAGS = $(SDSP_CFLAGS) -DUSE_SYSLOG
 bin_PROGRAMS = adsprpcd cdsprpcd sdsprpcd
 
 adsprpcddir = $(libdir)
-adsprpcd_SOURCES = domain/adsprpcd.c
+adsprpcd_SOURCES = daemon/adsprpcd.c
 adsprpcd_DEPENDENCIES = libadsp_default_listener.la
 adsprpcd_CFLAGS = -I$(top_srcdir)/inc -DDEFAULT_DOMAIN_ID=0 -DUSE_SYSLOG
 adsprpcd_LDADD = -ldl $(USE_LOG)
 
 
 cdsprpcddir = $(libdir)
-cdsprpcd_SOURCES = domain/cdsprpcd.c
+cdsprpcd_SOURCES = daemon/cdsprpcd.c
 cdsprpcd_DEPENDENCIES = libcdsp_default_listener.la
 cdsprpcd_CFLAGS = -I$(top_srcdir)/inc -DDEFAULT_DOMAIN_ID=3 -DUSE_SYSLOG
 cdsprpcd_LDADD =  -ldl $(USE_LOG)
 
 
 sdsprpcddir = $(libdir)
-sdsprpcd_SOURCES = domain/cdsprpcd.c
+sdsprpcd_SOURCES = daemon/cdsprpcd.c
 sdsprpcd_DEPENDENCIES = libsdsp_default_listener.la
 sdsprpcd_CFLAGS = -I$(top_srcdir)/inc -DDEFAULT_DOMAIN_ID=2 -DUSE_SYSLOG
 sdsprpcd_LDADD =  -ldl $(USE_LOG)
