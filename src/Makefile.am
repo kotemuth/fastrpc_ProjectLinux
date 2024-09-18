@@ -7,16 +7,16 @@ LIBDSPRPC_CFLAGS = -fno-short-enums -U_DEBUG -DARM_ARCH_7A -DLE_ENABLE -DNO_HAL 
 LIBDSPRPC_SOURCES = \
 		fastrpc_apps_core.c \
 		profile/fastrpc_perf.c \
-		service/fastrpc_pm.c \
-		service/fastrpc_config.c \
-		service/fastrpc_async.c \
+		control/fastrpc_pm.c \
+		control/fastrpc_config.c \
+		control/fastrpc_async.c \
 		memory/fastrpc_mem.c \
-		service/fastrpc_notif.c \
+		control/fastrpc_notif.c \
 		profile/fastrpc_latency.c \
-		service/fastrpc_ioctl.c \
+		control/fastrpc_ioctl.c \
 		debug/fastrpc_log.c \
-		service/fastrpc_procbuf.c \
-		service/fastrpc_cap.c \
+		control/fastrpc_procbuf.c \
+		control/fastrpc_cap.c \
 		debug/log_config.c \
 		daemon/dspsignal.c \
 		dspqueue/dspqueue_cpu.c \
