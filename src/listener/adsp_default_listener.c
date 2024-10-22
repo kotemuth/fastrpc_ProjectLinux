@@ -37,14 +37,12 @@
 #define SDSP_SECURE_DEVICE_NAME "fastrpc-sdsp-secure"
 #define MDSP_SECURE_DEVICE_NAME "fastrpc-mdsp-secure"
 #define CDSP_SECURE_DEVICE_NAME "fastrpc-cdsp-secure"
-#define CDSP1_SECURE_DEVICE_NAME "fastrpc-cdsp1-secure"
 
 // Array of supported domain names and its corresponding ID's.
 static domain_t supported_domains[] = {{ADSP_DOMAIN_ID, ADSP_DOMAIN},
                                        {MDSP_DOMAIN_ID, MDSP_DOMAIN},
                                        {SDSP_DOMAIN_ID, SDSP_DOMAIN},
-                                       {CDSP_DOMAIN_ID, CDSP_DOMAIN},
-                                       {CDSP1_DOMAIN_ID, CDSP1_DOMAIN}};
+                                       {CDSP_DOMAIN_ID, CDSP_DOMAIN}};
 
 // Get domain name for the domain id.
 static domain_t *get_domain_uri(int domain_id) {
@@ -75,9 +73,6 @@ static const char *get_secure_device_name(int domain_id) {
 		break;
 	case CDSP_DOMAIN_ID:
 		name = CDSP_SECURE_DEVICE_NAME;
-		break;
-	case CDSP1_DOMAIN_ID:
-		name = CDSP1_SECURE_DEVICE_NAME;
 		break;
 	default:
 		name = DEFAULT_DEVICE;
